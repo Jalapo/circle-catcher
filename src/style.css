@@ -1,0 +1,53 @@
+@-webkit-keyframes fadeIn {
+  from {
+    background-color: transparent;
+  }
+}
+@keyframes fadeIn {
+  from {
+    background-color: transparent;
+  }
+}
+#CC_game_App {
+  box-sizing: border-box;
+  border: 4px solid hsl(0deg, 0%, 20%);
+  width: 60%;
+  aspect-ratio: 4/3;
+}
+#CC_game_App * {
+  box-sizing: border-box;
+}
+#CC_game_App #CC_game_topBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 10%;
+  border-bottom: 0.75vh solid hsl(0deg, 0%, 20%);
+}
+#CC_game_App #CC_game_topBar * {
+  margin: 0 5%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  font-size: clamp(1rem, 4vh, 3.5vw);
+}
+#CC_game_App #CC_game_Screen {
+  background-color: darkgray;
+  height: 100%;
+}
+#CC_game_App .circle {
+  position: absolute;
+  width: 6%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background-color: black;
+  -webkit-animation: fadeIn 0.25s both;
+          animation: fadeIn 0.25s both;
+}/*# sourceMappingURL=style.css.map */
