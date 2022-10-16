@@ -10,7 +10,7 @@
 }
 #CC_game_App {
   box-sizing: border-box;
-  border: 4px solid hsl(0deg, 0%, 20%);
+  border: 0.5rem solid hsl(0deg, 0%, 20%);
   width: 60%;
   aspect-ratio: 4/3;
 }

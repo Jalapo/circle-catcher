@@ -14,22 +14,14 @@ let scoreTxt;
 let gameScreen;
 let screenProps = {};
 let initTime = Date.now();
-let displayTime = 20; // 1/10 seconds (displayTime:100 = 10s)
+let displayTime = 200; // 1/10 seconds (displayTime:100 = 10s)
 let score = 0;
 let circles = [];
-
 let lags = [];
-// let appWidth;
-// let appHeight;
 
 window.onload = () => {
-//  start setup
-    app = $('#CC_game_App');
-    // appWidth = Math.round(app[0].getBoundingClientRect().width);
-    // appHeight = Math.round(app[0].getBoundingClientRect().height);
-// end setup
-
-//  start draw layout
+//  start setup/draw layout
+    app = $('#CC_game_App'); // This ID is dedicated to the app container.
     topBar = $("<div></div>").prop("id" ,'CC_game_topBar');
     timeTxt = $("<span></span>").prop("id" ,'CC_game_timeTxt').text(`Time: ${Math.ceil(displayTime/10)}s`);
     scoreTxt = $("<span></span>").prop("id" ,'CC_game_scoreTxt').text(`Score: ${score}`);
@@ -38,25 +30,19 @@ window.onload = () => {
     topBar.append(timeTxt, scoreTxt); // add time and score to Top Bar
     app.append(topBar, gameScreen); // add Top Bar and Screen to app container
     gameScreen.empty();
+    updateScreen();
 
 // end draw layout
 
-// start circle generation
-    screenProps = {
-        "x": parseInt(gameScreen[0].getBoundingClientRect().x),
-        "y": parseInt(gameScreen[0].getBoundingClientRect().y),
-        "width": parseInt(gameScreen[0].getBoundingClientRect().width),
-        "height": parseInt(gameScreen[0].getBoundingClientRect().height)
-    };
-
+// begin drawing circles
     drawCircles = repeatFunc(()=> {
-        console.log(displayTime);
-        if (displayTime) {createCircle(); return true;} else {return false;}
+        // if timer != 0 (game is running), draw a circle every ~400ms
+        if (displayTime) {createCircle(); return true;} else {return false;} 
     }, 400, 0);
-
+// begin Game/BG timer
     timer = repeatFunc(() => {
         if (displayTime) {
-            circles.forEach(c => {if (Date.now() - c.createTime>1000) c.obj.remove();});
+            circles.forEach(c => {if (Date.now() - c.createTime>1500) c.obj.remove();}); // remove old circles
             displayTime--;
             timeTxt.text(`Time: ${Math.ceil(displayTime/10)}s`);
             return true;
@@ -65,9 +51,7 @@ window.onload = () => {
             return false;
         }
     }, 100, 0);
-    console.log(2);
 }
-
 
 
 // requisite functions below
@@ -77,6 +61,7 @@ function createCircle() {
     let circle = {"obj" : $("<div></div>"), "createTime" : Date.now()};
     // console.log(circle.createTime - initTime);
     circle.obj.addClass("circle");
+    circle.obj.click((c)=>{handleClick(c);})
     gameScreen.append(circle.obj);
     
     // gen random nums to translate circle.obj
@@ -85,7 +70,26 @@ function createCircle() {
     circle.obj.css("left", `${screenProps.x + offsetX}px`);
     circle.obj.css("top", `${screenProps.y + offsetY}px`);
     circles.push(circle);
+
+    function handleClick(circ) {
+        score++;
+        scoreTxt.text(`Score: ${score}`);
+        let index;
+        for (let i=0;i<circles.length;i++) {
+            if (circ.target == circles[i].obj[0]) {
+                circles.splice(i, 1);
+                circ.target.remove();
+            }
+        }
+    }
 }
+
+function updateScreen(){screenProps = {
+    "x": parseInt(gameScreen[0].getBoundingClientRect().x),
+    "y": parseInt(gameScreen[0].getBoundingClientRect().y),
+    "width": parseInt(gameScreen[0].getBoundingClientRect().width),
+    "height": parseInt(gameScreen[0].getBoundingClientRect().height)
+};}
 
 async function repeatFunc(callback, interval = 1000, lim = 5) {
     let lag = [];
@@ -128,9 +132,3 @@ async function timer(callback, time = 1000) {
     }
     return Date.now() - initTime - time;
 }
-
-
-
-console.log(1);
-
-// console.log(2);
