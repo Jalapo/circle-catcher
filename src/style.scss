@@ -1,6 +1,9 @@
 @keyframes fadeIn {
     from {background-color: transparent;}
 }
+@keyframes fadeOut {
+    to {background-color: transparent;}
+}
 
 #CC_game_App {
     // display: flex;

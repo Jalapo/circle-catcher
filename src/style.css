@@ -8,6 +8,16 @@
     background-color: transparent;
   }
 }
+@-webkit-keyframes fadeOut {
+  to {
+    background-color: transparent;
+  }
+}
+@keyframes fadeOut {
+  to {
+    background-color: transparent;
+  }
+}
 #CC_game_App {
   box-sizing: border-box;
   border: 0.5rem solid hsl(0deg, 0%, 20%);
