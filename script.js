@@ -96,7 +96,7 @@ function createCircle() {
         scoreTxt.text(`Score: ${score}`);
         let c = gameScreen.find(click.target);
         c.css("animation", "fadeOut 0.25s both");
-        c.css("backgroundColor", "green");
+        c.css("backgroundColor", "rgb(0,220,0)");
         await wait(500);
         c.remove();
     }}
